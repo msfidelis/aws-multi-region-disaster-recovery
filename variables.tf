@@ -66,3 +66,24 @@ variable "listener" {
     certificate_arn = ""
   }
 }
+
+variable "route53_hosted_zone" {
+  type    = string
+  default = ""
+}
+
+variable "dynamodb_sales" {
+  default = {
+    name         = "sales"
+    billing_mode = "PROVISIONED"
+    point_in_time_recovery  = true
+
+    read_min                 = 10
+    read_max                 = 60
+    read_autoscale_threshold = 80
+
+    write_min                 = 10
+    write_max                 = 80
+    write_autoscale_threshold = 90
+  }
+}

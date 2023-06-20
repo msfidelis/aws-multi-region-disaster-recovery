@@ -17,3 +17,11 @@ output "nlb_arn" {
 output "listener_arn" {
   value = aws_alb_listener.main.arn
 }
+
+output "kms_key" {
+    value = aws_kms_key.main.arn
+}
+
+output "region" {
+  value = data.aws_region.current.name
+}
