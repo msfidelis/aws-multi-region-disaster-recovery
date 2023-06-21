@@ -1,5 +1,9 @@
 output "cluster_name" {
-  value = aws_ecs_cluster.main.id
+  value = aws_ecs_cluster.main.name
+}
+
+output "private_zone" {
+  value = aws_route53_zone.main.id
 }
 
 output "sg" {
@@ -7,19 +11,23 @@ output "sg" {
 }
 
 output "alb_arn" {
-  value = aws_alb.main.arn
+  value = aws_lb.main.arn
 }
 
 output "nlb_arn" {
-  value = aws_alb.vpc_link.arn
+  value = aws_lb.vpc_link.arn
+}
+
+output "vpc_link" {
+  value = aws_api_gateway_vpc_link.main.id
 }
 
 output "listener_arn" {
-  value = aws_alb_listener.main.arn
+  value = aws_lb_listener.main.arn
 }
 
 output "kms_key" {
-    value = aws_kms_key.main.arn
+  value = aws_kms_key.main.arn
 }
 
 output "region" {

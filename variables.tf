@@ -58,6 +58,11 @@ variable "private_subnet_1c" {
   }
 }
 
+variable "route53_private_zone" {
+  type    = string
+  default = "mycompany.internal.com"
+}
+
 variable "listener" {
   default = {
     port            = 80,
@@ -69,14 +74,25 @@ variable "listener" {
 
 variable "route53_hosted_zone" {
   type    = string
-  default = ""
+  default = "Z102505525LUE9SZ7HWTY"
 }
+
+variable "route53_domain" {
+  type    = string
+  default = "msfidelis.com.br"
+}
+
+variable "api_gateway_domain" {
+  type    = string
+  default = "api.msfidelis.com.br"
+}
+
 
 variable "dynamodb_sales" {
   default = {
-    name         = "sales"
-    billing_mode = "PROVISIONED"
-    point_in_time_recovery  = true
+    name                   = "sales"
+    billing_mode           = "PROVISIONED"
+    point_in_time_recovery = true
 
     read_min                 = 10
     read_max                 = 60
@@ -87,3 +103,4 @@ variable "dynamodb_sales" {
     write_autoscale_threshold = 90
   }
 }
+

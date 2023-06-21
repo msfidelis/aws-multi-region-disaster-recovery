@@ -4,6 +4,8 @@ variable "subnets" {}
 
 variable "vpc_id" {}
 
+variable "route53_private_zone" {}
+
 variable "ingress_rules" {}
 
 variable "listener" {

@@ -1,9 +1,12 @@
-resource "aws_alb" "main" {
+resource "aws_lb" "main" {
   name    = format("%s-ingress", var.cluster_name)
   subnets = var.subnets
   security_groups = [
     aws_security_group.main.id
   ]
+
+  enable_deletion_protection       = false
+  enable_cross_zone_load_balancing = true
 
   tags = {
     Name        = format("%s-alb", var.cluster_name)
@@ -11,14 +14,13 @@ resource "aws_alb" "main" {
   }
 }
 
-resource "aws_alb_listener" "main" {
+resource "aws_lb_listener" "main" {
+  load_balancer_arn = aws_lb.main.arn
 
-  load_balancer_arn = aws_alb.main.arn
-
-  port              = lookup(var.listener, "port", "")
-  protocol          = lookup(var.listener, "protocol", "HTTP")
-  ssl_policy        = lookup(var.listener, "ssl_policy", "")
-  certificate_arn   = lookup(var.listener, "certificate_arn", "")
+  port            = lookup(var.listener, "port", "")
+  protocol        = lookup(var.listener, "protocol", "HTTP")
+  ssl_policy      = lookup(var.listener, "ssl_policy", "")
+  certificate_arn = lookup(var.listener, "certificate_arn", "")
 
   default_action {
     type = "fixed-response"
@@ -29,5 +31,4 @@ resource "aws_alb_listener" "main" {
       status_code  = "200"
     }
   }
-
 }

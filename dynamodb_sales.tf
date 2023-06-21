@@ -42,14 +42,10 @@ resource "aws_dynamodb_table" "sales" {
   }
 }
 
-resource "aws_dynamodb_table_replica" "sales" {
-  provider         = aws.disaster-recovery
-  global_table_arn = aws_dynamodb_table.sales.arn
-  kms_key_arn      = module.cluster_us_east_1.kms_key
-}
-
-
 resource "aws_appautoscaling_target" "sales_read" {
+
+  provider = aws.primary
+
   max_capacity       = lookup(var.dynamodb_sales, "read_max")
   min_capacity       = lookup(var.dynamodb_sales, "read_min")
   resource_id        = format("table/%s", aws_dynamodb_table.sales.id)
@@ -58,7 +54,10 @@ resource "aws_appautoscaling_target" "sales_read" {
 }
 
 resource "aws_appautoscaling_policy" "sales_read" {
-  name               = format("%s-autoscaling-read", lookup(var.dynamodb_sales, "name"))
+
+  provider = aws.primary
+
+  name               = format("%s-autoscaling-read", aws_dynamodb_table.sales.id)
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.sales_read.resource_id
   scalable_dimension = aws_appautoscaling_target.sales_read.scalable_dimension
@@ -74,6 +73,9 @@ resource "aws_appautoscaling_policy" "sales_read" {
 }
 
 resource "aws_appautoscaling_target" "sales_write" {
+
+  provider = aws.primary
+
   max_capacity       = lookup(var.dynamodb_sales, "write_max")
   min_capacity       = lookup(var.dynamodb_sales, "write_min")
   resource_id        = format("table/%s", aws_dynamodb_table.sales.id)
@@ -82,7 +84,10 @@ resource "aws_appautoscaling_target" "sales_write" {
 }
 
 resource "aws_appautoscaling_policy" "sales_write" {
-  name               = format("%s-autoscaling-write", lookup(var.dynamodb_sales, "name"))
+
+  provider = aws.primary
+
+  name               = format("%s-autoscaling-write", aws_dynamodb_table.sales.id)
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.sales_write.resource_id
   scalable_dimension = aws_appautoscaling_target.sales_write.scalable_dimension
@@ -95,4 +100,18 @@ resource "aws_appautoscaling_policy" "sales_write" {
 
     target_value = lookup(var.dynamodb_sales, "write_autoscale_threshold")
   }
+}
+
+resource "aws_dynamodb_table_replica" "sales" {
+  provider         = aws.disaster-recovery
+  global_table_arn = aws_dynamodb_table.sales.arn
+  kms_key_arn      = module.cluster_us_east_1.kms_key
+
+  depends_on = [
+    aws_appautoscaling_target.sales_read,
+    aws_appautoscaling_target.sales_write,
+    aws_appautoscaling_policy.sales_read,
+    aws_appautoscaling_policy.sales_write
+  ]
+
 }

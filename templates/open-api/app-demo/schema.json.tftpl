@@ -1,0 +1,20 @@
+{
+    "openapi" : "3.0.1",
+    "info" : {
+      "title" : "app-demo",
+      "version" : "1.0"
+    },
+    "paths" : {
+      "/path1" : {
+        "get" : {
+          "x-amazon-apigateway-integration" : {
+            "httpMethod" : "GET",
+            "uri" : "https://ip-ranges.amazonaws.com/ip-ranges.json",
+            "passthroughBehavior" : "when_no_match",
+            "type" : "http_proxy"
+          }
+        }
+      }
+    },
+    "components" : { }
+  }
