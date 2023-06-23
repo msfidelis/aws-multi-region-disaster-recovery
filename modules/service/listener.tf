@@ -7,8 +7,8 @@ resource "aws_lb_listener_rule" "main" {
   }
 
   condition {
-      host_header {
-          values = var.service_hostname 
-      }
+    host_header {
+      values = var.service_hostname
+    }
   }
 }

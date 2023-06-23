@@ -1,5 +1,5 @@
 
-  
+
 # Cluster Execution Role
 resource "aws_iam_role" "ecs_execution_role" {
   name               = format("%s-%s-role", var.cluster_name, var.service_name)
