@@ -95,6 +95,10 @@ variable "site_routing" {
   }
 }
 
+variable "sales_sns_topic_name" {
+  default = "sales-processing-topic"
+
+}
 
 variable "dynamodb_sales" {
   default = {
