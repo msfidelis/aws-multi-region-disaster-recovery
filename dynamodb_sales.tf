@@ -2,8 +2,8 @@ resource "aws_dynamodb_table" "sales" {
 
   provider = aws.primary
 
-  hash_key         = "id"
-  range_key        = "timestamp"
+  hash_key = "id"
+  # range_key        = "timestamp"
   name             = "sales"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
@@ -22,10 +22,10 @@ resource "aws_dynamodb_table" "sales" {
     type = "S"
   }
 
-  attribute {
-    name = "timestamp"
-    type = "S"
-  }
+  # attribute {
+  #   name = "timestamp"
+  #   type = "N"
+  # }
 
   server_side_encryption {
     enabled     = true

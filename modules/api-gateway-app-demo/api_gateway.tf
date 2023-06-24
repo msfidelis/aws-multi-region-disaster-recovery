@@ -6,17 +6,17 @@ resource "aws_api_gateway_rest_api" "main" {
       version = "1.0"
     }
     paths = {
-      "/sale" = {
+      "/sales" = {
         post = {
           x-amazon-apigateway-integration = {
-            httpMethod           = "GET"
+            httpMethod           = "POST"
             payloadFormatVersion = "1.0"
             type                 = "HTTP_PROXY"
             uri                  = "https://ip-ranges.amazonaws.com/ip-ranges.json"
           }
         }
       }
-      "/products" = {
+      "/sales/{id}" = {
         get = {
           x-amazon-apigateway-integration = {
             httpMethod           = "GET"
@@ -26,7 +26,7 @@ resource "aws_api_gateway_rest_api" "main" {
           }
         }
       }
-      "/products/{id}" = {
+      "/healthcheck" = {
         get = {
           x-amazon-apigateway-integration = {
             httpMethod           = "GET"

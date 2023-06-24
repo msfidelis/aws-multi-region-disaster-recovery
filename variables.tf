@@ -87,6 +87,14 @@ variable "api_gateway_domain" {
   default = "api.msfidelis.com.br"
 }
 
+variable "site_routing" {
+  type = map(any)
+  default = {
+    us-east-1 = 0
+    sa-east-1 = 100
+  }
+}
+
 
 variable "dynamodb_sales" {
   default = {

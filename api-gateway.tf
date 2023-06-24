@@ -36,7 +36,7 @@ module "api_gateway_app_demo_us_east_1" {
   source = "./modules/api-gateway-app-demo"
 
   providers = {
-    aws = aws.primary
+    aws = aws.disaster-recovery
   }
 
   gateway_name = "app-demo"
