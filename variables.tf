@@ -116,3 +116,10 @@ variable "dynamodb_sales" {
   }
 }
 
+variable "state" {
+  type = map(any)
+  default = {
+    "sa-east-1" : "ACTIVE",
+    "us-east-1" : "PASSIVE",
+  }
+}

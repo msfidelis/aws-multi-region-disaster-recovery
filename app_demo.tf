@@ -18,8 +18,7 @@ module "app_demo_sa_east_1" {
     format("app-demo.%s", var.route53_private_zone)
   ]
 
-  service_subnets = module.vpc_sa_east_1.private_subnets
-
+  service_subnets  = module.vpc_sa_east_1.private_subnets
   private_listener = module.cluster_sa_east_1.listener_arn
 
   service_launch_type = "FARGATE"
@@ -47,8 +46,28 @@ module "app_demo_sa_east_1" {
     interval            = 60
     matcher             = "200"
     path                = "/healthcheck"
-    port                = 80
+    port                = 8080
   }
+
+  envs = [
+    {
+      name : "AWS_REGION",
+      value : "sa-east-1"
+    },
+    {
+      name : "DYNAMO_SALES_TABLE",
+      value : aws_dynamodb_table.sales.name
+    },
+    {
+      name : "SNS_SALES_PROCESSING_TOPIC",
+      value : module.sales_sns_sa_east_1.arn
+    },
+    {
+      name : "SSM_PARAMETER_STORE_STATE",
+      value : module.ssm_parameter_state_sa_east_1.name
+    }
+  ]
+
 }
 
 
@@ -100,6 +119,26 @@ module "app_demo_us_east_1" {
     interval            = 60
     matcher             = "200"
     path                = "/healthcheck"
-    port                = 80
+    port                = 8080
   }
+
+
+    envs = [
+    {
+      name : "AWS_REGION",
+      value : "us-east-1"
+    },
+    {
+      name : "DYNAMO_SALES_TABLE",
+      value : aws_dynamodb_table.sales.name
+    },
+    {
+      name : "SNS_SALES_PROCESSING_TOPIC",
+      value : module.sales_sns_us_east_1.arn
+    },
+    {
+      name : "SSM_PARAMETER_STORE_STATE",
+      value : module.ssm_parameter_state_us_east_1.name
+    }
+  ]
 }

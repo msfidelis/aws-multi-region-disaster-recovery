@@ -12,6 +12,7 @@ resource "aws_ecs_task_definition" "main" {
       desired_task_cpu    = var.service_cpu
       desired_task_memory = var.service_memory
       region              = data.aws_region.current.name
+      envs                = jsonencode(var.envs)
     }
   )
   requires_compatibilities = ["FARGATE"]

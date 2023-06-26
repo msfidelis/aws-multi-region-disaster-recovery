@@ -57,3 +57,7 @@ variable "platform_version" {
   default = "LATEST"
 }
 
+
+variable "envs" {
+  type = list(any)
+}

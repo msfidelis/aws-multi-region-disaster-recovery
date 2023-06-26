@@ -20,15 +20,6 @@
           "awslogs-stream-prefix": "${log_prefix}"
         }
       },
-      "environment": [
-        {
-          "name": "FOO",
-          "value": "BAR"
-        },
-        {
-          "name" : "PORT",
-          "value": "${container_port}"
-        }
-      ]
+      "environment": ${envs}
     }
 ]
