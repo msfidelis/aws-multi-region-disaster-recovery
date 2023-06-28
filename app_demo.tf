@@ -123,7 +123,7 @@ module "app_demo_us_east_1" {
   }
 
 
-    envs = [
+  envs = [
     {
       name : "AWS_REGION",
       value : "us-east-1"

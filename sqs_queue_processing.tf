@@ -12,7 +12,7 @@ module "sales_processing_queue_sa_east_1" {
   receive_wait_time_seconds     = 10
   dlq_redrive_max_receive_count = 4
 
-  sns_topic_name                = var.sales_sns_topic_name
+  sns_topic_name = var.sales_sns_topic_name
 }
 
 module "sales_processing_queue_us_east_1" {
@@ -29,7 +29,7 @@ module "sales_processing_queue_us_east_1" {
   receive_wait_time_seconds     = 10
   dlq_redrive_max_receive_count = 4
 
-  sns_topic_name                = var.sales_sns_topic_name
+  sns_topic_name = var.sales_sns_topic_name
 }
 
 module "sales_sns_sa_east_1" {

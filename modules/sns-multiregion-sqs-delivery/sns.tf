@@ -1,7 +1,7 @@
 resource "aws_sns_topic" "main" {
-  name                        = format("%s", var.name)
-#   fifo_topic                  = true
-#   content_based_deduplication = true
+  name = format("%s", var.name)
+  #   fifo_topic                  = true
+  #   content_based_deduplication = true
 }
 
 resource "aws_sns_topic_subscription" "primary" {

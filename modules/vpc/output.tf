@@ -1,3 +1,7 @@
+output "region" {
+  value = data.aws_region.current.name
+}
+
 output "vpc_id" {
   value = aws_vpc.main.id
 }
