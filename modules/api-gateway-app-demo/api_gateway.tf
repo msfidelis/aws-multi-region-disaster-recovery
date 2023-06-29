@@ -9,30 +9,36 @@ resource "aws_api_gateway_rest_api" "main" {
       "/sales" = {
         post = {
           x-amazon-apigateway-integration = {
-            httpMethod           = "POST"
-            payloadFormatVersion = "1.0"
-            type                 = "HTTP_PROXY"
-            uri                  = "https://ip-ranges.amazonaws.com/ip-ranges.json"
+            httpMethod            = "POST"
+            payloadFormatVersion  = "1.0"
+            type                  = "HTTP_PROXY"
+            uri                   = "http://app-demo.mycompany.internal.com/reflection"
+            connectionType        = "VPC_LINK",
+            connectionId          = "${var.vpc_link}"
           }
         }
       }
       "/sales/{id}" = {
         get = {
           x-amazon-apigateway-integration = {
-            httpMethod           = "GET"
-            payloadFormatVersion = "1.0"
-            type                 = "HTTP_PROXY"
-            uri                  = "https://ip-ranges.amazonaws.com/ip-ranges.json"
+            httpMethod            = "GET"
+            payloadFormatVersion  = "1.0"
+            type                  = "HTTP_PROXY"
+            uri                   = "http://app-demo.mycompany.internal.com/reflection"
+            connectionType        = "VPC_LINK",
+            connectionId          = "${var.vpc_link}",
+          }
           }
         }
-      }
       "/healthcheck" = {
         get = {
           x-amazon-apigateway-integration = {
-            httpMethod           = "GET"
-            payloadFormatVersion = "1.0"
-            type                 = "HTTP_PROXY"
-            uri                  = "https://ip-ranges.amazonaws.com/ip-ranges.json"
+            httpMethod            = "GET"
+            payloadFormatVersion  = "1.0"
+            type                  = "HTTP_PROXY"
+            uri                   = "http://app-demo.mycompany.internal.com/healthcheck"
+            connectionType        = "VPC_LINK",
+            connectionId          = "${var.vpc_link}"
           }
         }
       }
