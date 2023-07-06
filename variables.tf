@@ -87,20 +87,28 @@ variable "api_gateway_domain" {
   default = "api.msfidelis.com.br"
 }
 
-variable "site_routing" {
-  type = map(any)
-  default = {
-    us-east-1 = 0
-    sa-east-1 = 100
-  }
-}
-
 variable "sales_sns_topic_name" {
   default = "sales-processing-topic"
 
 }
 
 variable "dynamodb_sales" {
+  default = {
+    name                   = "sales"
+    billing_mode           = "PROVISIONED"
+    point_in_time_recovery = true
+
+    read_min                 = 10
+    read_max                 = 60
+    read_autoscale_threshold = 80
+
+    write_min                 = 10
+    write_max                 = 80
+    write_autoscale_threshold = 90
+  }
+}
+
+variable "dynamodb_idempotency" {
   default = {
     name                   = "sales"
     billing_mode           = "PROVISIONED"

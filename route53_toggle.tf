@@ -5,10 +5,9 @@ resource "aws_route53_record" "primary" {
   zone_id = var.route53_hosted_zone
   name    = var.api_gateway_domain
   type    = "A"
-  #   ttl     = 10
 
   weighted_routing_policy {
-    weight = lookup(var.site_routing, "sa-east-1")
+    weight = lookup(var.state, "sa-east-1") == "ACTIVE" ? 100 : 0
   }
 
   set_identifier = "primary"
@@ -30,7 +29,7 @@ resource "aws_route53_record" "dr" {
   type    = "A"
 
   weighted_routing_policy {
-    weight = lookup(var.site_routing, "us-east-1")
+    weight = lookup(var.state, "us-east-1") == "ACTIVE" ? 100 : 0
   }
 
   set_identifier = "disaster-recovery"

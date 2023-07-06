@@ -1,4 +1,4 @@
-module "sales_api_sa_east_1" {
+module "sales_worker_sa_east_1" {
   source = "./modules/service"
 
   providers = {
@@ -10,12 +10,12 @@ module "sales_api_sa_east_1" {
   cluster_name = module.cluster_sa_east_1.cluster_name
   route53_zone = module.cluster_sa_east_1.private_zone
 
-  service_name  = "sales-api"
-  service_image = "fidelissauro/sales-rest-api:latest"
+  service_name  = "sales-worker"
+  service_image = "fidelissauro/sales-worker:latest"
 
-  service_port = 8080
+  service_port = 8090
   service_hostname = [
-    format("sales-api.%s", var.route53_private_zone)
+    format("sales-worker.%s", var.route53_private_zone)
   ]
 
   service_subnets  = module.vpc_sa_east_1.private_subnets
@@ -46,7 +46,7 @@ module "sales_api_sa_east_1" {
     interval            = 60
     matcher             = "200"
     path                = "/healthcheck"
-    port                = 8080
+    port                = 8090
   }
 
   envs = [
@@ -65,13 +65,21 @@ module "sales_api_sa_east_1" {
     {
       name : "SSM_PARAMETER_STORE_STATE",
       value : module.ssm_parameter_state_sa_east_1.name
+    },
+    {
+      name : "SQS_SALES_QUEUE",
+      value : module.sales_processing_queue_sa_east_1.sqs_queue_url
+    },
+    {
+      name : "S3_SALES_BUCKET",
+      value : module.bucket_sa_east_1.id
     }
   ]
 
 }
 
 
-module "sales_api_us_east_1" {
+module "sales_worker_us_east_1" {
   source = "./modules/service"
 
   providers = {
@@ -83,12 +91,12 @@ module "sales_api_us_east_1" {
   cluster_name = module.cluster_us_east_1.cluster_name
   route53_zone = module.cluster_us_east_1.private_zone
 
-  service_name  = "sales-api"
-  service_image = "fidelissauro/sales-rest-api:latest"
+  service_name  = "sales-worker"
+  service_image = "fidelissauro/sales-worker:latest"
 
-  service_port = 8080
+  service_port = 8090
   service_hostname = [
-    format("sales-api.%s", var.route53_private_zone)
+    format("sales-worker.%s", var.route53_private_zone)
   ]
 
   service_subnets  = module.vpc_us_east_1.private_subnets
@@ -119,7 +127,7 @@ module "sales_api_us_east_1" {
     interval            = 60
     matcher             = "200"
     path                = "/healthcheck"
-    port                = 8080
+    port                = 8090
   }
 
 
@@ -139,6 +147,14 @@ module "sales_api_us_east_1" {
     {
       name : "SSM_PARAMETER_STORE_STATE",
       value : module.ssm_parameter_state_us_east_1.name
+    },
+    {
+      name : "SQS_SALES_QUEUE",
+      value : module.sales_processing_queue_us_east_1.sqs_queue_url
+    },
+    {
+      name : "S3_SALES_BUCKET",
+      value : module.bucket_us_east_1.id
     }
   ]
 }
