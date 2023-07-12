@@ -3,15 +3,14 @@ resource "aws_dynamodb_table" "sales" {
   provider = aws.primary
 
   hash_key = "id"
-  # range_key        = "timestamp"
+
   name             = "sales"
   stream_enabled   = true
   stream_view_type = "NEW_AND_OLD_IMAGES"
 
   read_capacity  = lookup(var.dynamodb_sales, "read_min")
   write_capacity = lookup(var.dynamodb_sales, "write_min")
-
-  billing_mode = lookup(var.dynamodb_sales, "billing_mode")
+  billing_mode   = lookup(var.dynamodb_sales, "billing_mode")
 
   point_in_time_recovery {
     enabled = lookup(var.dynamodb_sales, "point_in_time_recovery")
@@ -21,11 +20,6 @@ resource "aws_dynamodb_table" "sales" {
     name = "id"
     type = "S"
   }
-
-  # attribute {
-  #   name = "timestamp"
-  #   type = "N"
-  # }
 
   server_side_encryption {
     enabled     = true

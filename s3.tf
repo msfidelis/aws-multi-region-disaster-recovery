@@ -14,7 +14,6 @@ module "bucket_us_east_1" {
 
   providers = {
     aws = aws.disaster-recovery
-
   }
 
   bucket_name_prefix = "processed-sale"

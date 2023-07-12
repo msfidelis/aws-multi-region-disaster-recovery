@@ -127,7 +127,7 @@ variable "dynamodb_idempotency" {
 variable "state" {
   type = map(any)
   default = {
-    "sa-east-1" : "PASSIVE",
-    "us-east-1" : "ACTIVE",
+    "sa-east-1" : "ACTIVE",
+    "us-east-1" : "PASSIVE",
   }
 }

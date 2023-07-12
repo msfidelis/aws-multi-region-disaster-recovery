@@ -8,11 +8,11 @@ module "custom_domain_sa_east_1" {
   api_gateway_domain_name = var.api_gateway_domain
 
 
-  base_path_mappings      = [
+  base_path_mappings = [
     {
       base_path = "/",
       api_id    = module.api_gateway_app_demo_sa_east_1.id,
-      stage     =  module.api_gateway_app_demo_sa_east_1.stage,
+      stage     = module.api_gateway_app_demo_sa_east_1.stage,
     }
   ]
 
@@ -28,11 +28,11 @@ module "custom_domain_us_east_1" {
   acm_arn                 = module.acm_us_east_1.arn
   api_gateway_domain_name = var.api_gateway_domain
 
-  base_path_mappings      = [
+  base_path_mappings = [
     {
       base_path = "/",
       api_id    = module.api_gateway_app_demo_us_east_1.id,
-      stage     =  module.api_gateway_app_demo_us_east_1.stage,
+      stage     = module.api_gateway_app_demo_us_east_1.stage,
     }
   ]
 }
