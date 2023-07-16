@@ -4,7 +4,7 @@
 
 # SNS & SQS Multiregion
 
-![Idempotency](.github/img/DR-SNS-SQS.png)
+![Idempotency](.github/img/DR-SNS-SQS..png)
 
 # Data Replication 
 
