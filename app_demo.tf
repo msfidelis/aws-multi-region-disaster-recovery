@@ -24,8 +24,8 @@ module "sales_api_sa_east_1" {
   service_launch_type = "FARGATE"
 
   # Auto Scale Limits
-  desired_tasks = 2
-  min_tasks     = 2
+  desired_tasks = 4
+  min_tasks     = 4
   max_tasks     = 10
 
   # Tasks CPU / Memory limits
